@@ -229,7 +229,7 @@ while (itemNum[0] != 4) {
 		victory = 400;
 			} // Closes tutorial if statement
 			
-while (area < 7) {
+while (area < 7) { // Main gameplay loop until the dragon's lair
     // AREA ZERO
     while (area == 0) {
     		cin >> action;
