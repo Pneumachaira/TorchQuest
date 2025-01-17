@@ -126,7 +126,7 @@ int areaState(int area, int state, int item){
 			cout << "You see your dad's inventory on the floor.  No sign of the rest of\nhim.\n" ; }
 			break;
 } // Closes switch statement
-} // Closes areaState function
+return 0; } // Closes areaState function
 
 //////////////////////////////////////////////////
 // MAIN FUNCTION STARTS HERE
@@ -228,227 +228,228 @@ while (itemNum[0] != 4) {
 		state = 0;
 		victory = 400;
 			} // Closes tutorial if statement
+			
+while (area < 7) {
+    // AREA ZERO
+    while (area == 0) {
+    		cin >> action;
+    		if (action == "help" || action == "look.around" || action == "go.north" || action == "go.west" || action == "go.south" || action == "go.east" || action == "craft.torches" || action == "inventory" || action == "use.bluekey" || action == "use.redkey" || action == "craft.torch") {
+    			if (action == "craft.torch") {
+    				action = "craft.torches"; }
+    			if (action == "help") openHelp();
+    			if (action == "look.around") areaState(0, 0, 0);
+    			if (action == "go.north") {
+    				cout << ">> You head towards the castle.\n";
+    				area = 5; }
+    			if (action == "go.west") {
+    				cout << ">> You head west through the green gate.\n";
+    				area = 1; }
+    			if (action == "go.south" && itemNum[1] == 0) {
+    					cout << ">> The blue gate is locked.\n"; }
+    			if ((action == "go.south" || action == "use.bluekey") && itemNum[1] == 1) {
+    					cout << ">> You use the blue key and head south through the blue gate.\n";
+    					area = 2; }
+    			if (action == "go.east" && itemNum[2] == 0) {
+    					cout << ">> The red gate is locked.\n"; }
+    			if ((action == "go.east" || action == "use.redkey") && itemNum[2] == 1) {
+    					cout << ">> You use the red key and head east through the red gate.\n";
+    					area = 3; }
+    			actionCraft();
+    			if (action == "inventory") inven() ;
+    			if (action == "use.bluekey" && itemNum[1] == 0) noComprendo();
+    			if (action == "use.redkey" && itemNum[2] == 0) noComprendo();
+    		} // Closes big if statement
+    		else noComprendo();
+    } // AREA ZERO COMPLETE
 
-// AREA ZERO
-while (area == 0) {
-		cin >> action;
-		if (action == "help" || action == "look.around" || action == "go.north" || action == "go.west" || action == "go.south" || action == "go.east" || action == "craft.torches" || action == "inventory" || action == "use.bluekey" || action == "use.redkey" || action == "craft.torch") {
-			if (action == "craft.torch") {
-				action = "craft.torches"; }
-			if (action == "help") openHelp();
-			if (action == "look.around") areaState(0, 0, 0);
-			if (action == "go.north") {
-				cout << ">> You head towards the castle.\n";
-				area = 5; }
-			if (action == "go.west") {
-				cout << ">> You head west through the green gate.\n";
-				area = 1; }
-			if (action == "go.south" && itemNum[1] == 0) {
-					cout << ">> The blue gate is locked.\n"; }
-			if ((action == "go.south" || action == "use.bluekey") && itemNum[1] == 1) {
-					cout << ">> You use the blue key and head south through the blue gate.\n";
-					area = 2; }
-			if (action == "go.east" && itemNum[2] == 0) {
-					cout << ">> The red gate is locked.\n"; }
-			if ((action == "go.east" || action == "use.redkey") && itemNum[2] == 1) {
-					cout << ">> You use the red key and head east through the red gate.\n";
-					area = 3; }
-			actionCraft();
-			if (action == "inventory") inven() ;
-			if (action == "use.bluekey" && itemNum[1] == 0) noComprendo();
-			if (action == "use.redkey" && itemNum[2] == 0) noComprendo();
-		} // Closes big if statement
-		else noComprendo();
-} // AREA ZERO COMPLETE
-	} // Closes in Story 1 lock-in
-
-// AREA ONE
-if (area == 1) areaState(1, 0, item1) ;
-while (area == 1) {
-	cin >> action;
-	if (action == "help" || action == "inventory" || action == "look.around" || action == "pickup.flowers" || action== "pickup.sticks" || action == "craft.torches" || action == "go.east" || action == "craft.torch") {
-		if (action == "craft.torch") {
-			action = "craft.torches" ; }
-		if (action == "help") openHelp();
-		if (action == "inventory") inven();
-		if (action == "look.around") {
-			areaState(1, 0, item1); }
-		if (action == "pickup.flowers" && (item1 == 1 || item1 == 3)) {
-			noComprendo() ; }
-		if (action == "pickup.flowers" && (item1 == 0 || item1 == 2)) {
-			cout << ">> You gingerly lift up some vibrant roses, and what's this?\nThere was a blue key beneath the roses!\n>> Got Flowers!  Got Blue Key!\n" ;
-			itemNum[0] += 1;
-			itemNum[1] += 1;
-			if (item1 == 0) item1 = 1;
-			if (item1 == 2) item1 = 3; }
-			if (action == "pickup.sticks" && item1 >= 2) {
-				noComprendo() ; }
-		if (action == "pickup.sticks" && item1 < 2) {
-			cout << ">> Ah, pick-up sticks, America's favorite pastime.  Or at least,\nthat's what you would say, if you had any concept of America. \nOr a pastime.  Curse you, 6th-century agrarian-based society that\nallows little to no free time for pick-up sticks!\n>> Er, anyway, you got 4 Sticks.\n";
-			itemNum[4] += 4; 
-			if (item1 == 0) item1 = 2;
-			if (item1 == 1) item1 = 3; }
-            actionCraft();
-			if (action == "go.east") {
-				area = 0;
-				cout << ">> You head back east into the courtyard.\n" ; }
-	}	// All of the if actions close here
-	else noComprendo();
-} // AREA ONE COMPLETE
-
-if (area == 2) {
-	if (itemNum[2] == 0) state = 0;
-	areaState(2, state, item2); }
-while (area == 2) {
-	cin >> action;
-	if (action == "help" || action == "inventory" || action == "look.around" || action == "pickup.squirrel" || action == "pickup.sticks" || action == "go.north" || action == "craft.torches" || action == "craft.torch") {
-		if (action == "craft.torch") {
-			action = "craft.torches" ; }
-		if (action == "help") openHelp();
-		if (action == "inventory") inven();
-		if (action == "look.around") {
-			areaState(2, state, item2); }
-		if (action == "pickup.squirrel" && state != 0) {
-			noComprendo(); }
-		if (action == "pickup.squirrel" && state == 0) {
-			cout << ">> Your eyes ablaze with determination, you deftly scoop the\nsquirrel into your hands.  As a reward for your quick reflexes,\nhe hands you a key and scampers off.\n>> Got Red Key!\n" ;
-			itemNum[2] = 1;
-			state = 2; }
-		if (action == "pickup.sticks" && item2 == 1) {
-			noComprendo() ; }
-		if (action == "pickup.sticks" && item2 == 0) {
-			cout << ">> Got 5 Sticks!  Whoa mama!\n";
-			itemNum[4] += 5;
-			item2 = 1;
-		} // Closes if for picking up sticks
-		if (action == "go.north") {
-			area = 0;
-			cout << ">> You head back north into the courtyard.\n" ; }
-		actionCraft() ;
-	} // Closes big if statement
-	else noComprendo();
-	if (itemNum[2] == 0) state = 1;
-}  // AREA TWO COMPLETE
-
-
-// AREA THREE
-if (area == 3) areaState(3, state, item3);
-while (area == 3) {
-	cin >> action;
-	if (action == "help" || action == "inventory" || action == "look.around" || action == "use.sticks" || action == "use.stick" || action == "pickup.sticks" || action == "go.west" || action == "go.east" || action == "craft.torches" || action == "craft.torch") {
-		if (action == "craft.torch") {
-			action = "craft.torches" ; }
-		if (action == "help") openHelp();
-		if (action == "inventory") inven();
-		if (action == "look.around") {
-			areaState(3, state, item3); }
-		if ((action == "use.stick" || action == "use.sticks") && itemNum[4] > 0) {
-			state = 3;
-			cout << ">> You proudly wave a stick in the air, answering the riddle.  You\nknew having a terrible sense of humor would come in handy one day!\n>> The door opens.\n" ; }
-		if ((action == "use.stick" || action == "use.sticks") && itemNum[4] == 0) {
-			noComprendo() ; }
-		if (action == "pickup.sticks" && item3 == 1) {
-			noComprendo() ; }
-		if (action == "pickup.sticks" && item3 == 0) {
-			item3 = 1;
-			itemNum[4] += 4;
-			cout << ">> Got 4 Sticks!  Aw yeah!\n"; }
-			if (action == "go.west") {
-				area = 0;
-				cout << ">> You head back west into the courtyard.\n" ; }
-			if (action == "go.east" && state >= 3) {
-				area = 4;
-				cout << ">> You head into the bronze building.\n" ; }
-			if (action == "go.east" && state < 3) {
-				cout << ">> It's locked until you answer the riddle.\n" ; }
-			actionCraft() ;
-	} // Closes big if statement
-	else noComprendo();
-} // AREA THREE COMPLETE
-
-if (area == 4) {
-	areaState(4, state, 0); }
-while (area == 4) {
-	cin >> action;
-	if (action == "help" || action == "inventory" || action == "look.around" || action == "pickup.sword" || action == "go.west" || action == "craft.torches" || action == "craft.torch") {
-		if (action == "craft.torch" ) {
-			action = "craft.torches" ; }
-		if (action == "help") openHelp();
-		if (action == "inventory") inven();
-		if (action == "look.around") {
-			areaState(4, state, 0); }
-		actionCraft();
-		if (action == "pickup.sword" && itemNum[3] == 1) {
-			noComprendo() ; }
-		if (action == "pickup.sword" && itemNum[3] == 0) {
-			itemNum[3] = 1;
-			cout << ">> Got Sword!  You go to raise it high above your head\ntriumphantly, but while attempting to do so you smack your hand on\nthe wall.  Stupid small outhouse sword shrine, you gripe, as you\nrub your bruised hand.\n" ; }
-		if (action == "go.west") {
-			area = 3;
-			cout << ">> You exit the shrine, making sure to change the 'Occupied' sign\nto 'Vacant'.\n" ; }
-	} // Closes big if statement
-		else noComprendo() ;
-} // AREA FOUR COMPLETE
-
-if (area == 5) {
-	areaState(5, state, 0) ; }
-while (area == 5) {
-	cin >> action;
-	if (action == "help" || action == "inventory" || action == "look.around" || action == "use.sword" || action == "go.north" || action == "go.south" || action == "craft.torches" || action == "craft.torch") {
-		if (action == "craft.torch") {
-			action = "craft.torches" ; }
-		if (action == "help") openHelp();
-		if (action == "inventory") inven();
-		if (action == "look.around") {
-			areaState(5, state, 0); }
-		actionCraft();
-		if (action == "use.sword" && (state > 3 || itemNum[3] == 0)) {
-			noComprendo() ; }
-		if (action == "use.sword" && state <4 && itemNum[3] == 1) {
-			cout << ">> You raise the sword high into the air.  Oh yeah, totally nailed\nit that time.  You then promptly sneeze.  Stupid old dusty magic\nsword.  The drawbridge lowers.\n" ;
-			state = 4; }
-		if (action == "go.north" && state > 3) {
-			area = 6;
-			cout << ">> You cross the bridge and head inside.\n" ; }
-		if (action == "go.north" && state < 4) {
-			cout << ">> You should probably lower the drawbridge first.\n" ; }
-		if (action == "go.south") {
-			area = 0;
-			cout << ">> You head back south into the courtyard.\n" ; }
-	} // Closes big if statement
-	else noComprendo() ;
-} // AREA FIVE COMPLETE
-
-if (area == 6) {
-	areaState(6, state, 0) ; }
-while (area == 6) {
-	cin >> action;
-	if (action == "help" || action == "inventory" || action == "look.around" || action == "use.torches" || action == "go.north" || action == "craft.torches" || action == "craft.torch" || action == "go.south") {
-		if (action == "craft.torch" ) {
-			action = "craft.torches" ; }
-		if (action == "help") openHelp();
-		if (action == "inventory") inven();
-		if (action == "look.around") {
-			areaState(6, state, 0); }
-		actionCraft();
-		if (action == "use.torches" && itemNum[5] < 3) {
-			cout << ">> You're gonna need more torches than that.\n" ; }
-		if (action == "use.torches" && state < 5 && itemNum[5] == 3) {
-			itemNum[5] -= 3;
-			state = 5;
-			cout << ">> You head north and begin to line the wall with torches.  One...\ntwo... three....  Huh.  You're already at the end.  That hallway\nwas a lot shorter than you thought.\n>> You peek through the iron window-bars of the door leading to\nthe dragon's chamber.  Perfect, the dragon is asleep!\n" ; }
-		if (action == "go.south") {
-			area = 5;
-			cout << ">> You head back outside.\n" ; }
-		if (action == "go.north" && state < 5) {
-			cout << ">> Long dark hallways really aren't your thing.  Let's craft up\nsomething to light the way.\n" ; }
-		if (action == "go.north" && state >= 5) {
-			area = 7;
-			cout << ">> Oh geez, I hope you're ready for this.  You head into the\ndragon's lair.\n" ; }
-	} // Closes big if statement
-	else noComprendo() ;
-} // AREA SIX COMPLETE
-
+    
+    // AREA ONE
+    if (area == 1) areaState(1, 0, item1) ;
+    while (area == 1) {
+    	cin >> action;
+    	if (action == "help" || action == "inventory" || action == "look.around" || action == "pickup.flowers" || action== "pickup.sticks" || action == "craft.torches" || action == "go.east" || action == "craft.torch") {
+    		if (action == "craft.torch") {
+    			action = "craft.torches" ; }
+    		if (action == "help") openHelp();
+    		if (action == "inventory") inven();
+    		if (action == "look.around") {
+    			areaState(1, 0, item1); }
+    		if (action == "pickup.flowers" && (item1 == 1 || item1 == 3)) {
+    			noComprendo() ; }
+    		if (action == "pickup.flowers" && (item1 == 0 || item1 == 2)) {
+    			cout << ">> You gingerly lift up some vibrant roses, and what's this?\nThere was a blue key beneath the roses!\n>> Got Flowers!  Got Blue Key!\n" ;
+    			itemNum[0] += 1;
+    			itemNum[1] += 1;
+    			if (item1 == 0) item1 = 1;
+    			if (item1 == 2) item1 = 3; }
+    			if (action == "pickup.sticks" && item1 >= 2) {
+    				noComprendo() ; }
+    		if (action == "pickup.sticks" && item1 < 2) {
+    			cout << ">> Ah, pick-up sticks, America's favorite pastime.  Or at least,\nthat's what you would say, if you had any concept of America. \nOr a pastime.  Curse you, 6th-century agrarian-based society that\nallows little to no free time for pick-up sticks!\n>> Er, anyway, you got 4 Sticks.\n";
+    			itemNum[4] += 4; 
+    			if (item1 == 0) item1 = 2;
+    			if (item1 == 1) item1 = 3; }
+                actionCraft();
+    			if (action == "go.east") {
+    				area = 0;
+    				cout << ">> You head back east into the courtyard.\n" ; }
+    	}	// All of the if actions close here
+    	else noComprendo();
+    } // AREA ONE COMPLETE
+    
+    if (area == 2) {
+    	if (itemNum[2] == 0) state = 0;
+    	areaState(2, state, item2); }
+    while (area == 2) {
+    	cin >> action;
+    	if (action == "help" || action == "inventory" || action == "look.around" || action == "pickup.squirrel" || action == "pickup.sticks" || action == "go.north" || action == "craft.torches" || action == "craft.torch") {
+    		if (action == "craft.torch") {
+    			action = "craft.torches" ; }
+    		if (action == "help") openHelp();
+    		if (action == "inventory") inven();
+    		if (action == "look.around") {
+    			areaState(2, state, item2); }
+    		if (action == "pickup.squirrel" && state != 0) {
+    			noComprendo(); }
+    		if (action == "pickup.squirrel" && state == 0) {
+    			cout << ">> Your eyes ablaze with determination, you deftly scoop the\nsquirrel into your hands.  As a reward for your quick reflexes,\nhe hands you a key and scampers off.\n>> Got Red Key!\n" ;
+    			itemNum[2] = 1;
+    			state = 2; }
+    		if (action == "pickup.sticks" && item2 == 1) {
+    			noComprendo() ; }
+    		if (action == "pickup.sticks" && item2 == 0) {
+    			cout << ">> Got 5 Sticks!  Whoa mama!\n";
+    			itemNum[4] += 5;
+    			item2 = 1;
+    		} // Closes if for picking up sticks
+    		if (action == "go.north") {
+    			area = 0;
+    			cout << ">> You head back north into the courtyard.\n" ; }
+    		actionCraft() ;
+    	} // Closes big if statement
+    	else noComprendo();
+    	if (itemNum[2] == 0) state = 1;
+    }  // AREA TWO COMPLETE
+    
+    
+    // AREA THREE
+    if (area == 3) areaState(3, state, item3);
+    while (area == 3) {
+    	cin >> action;
+    	if (action == "help" || action == "inventory" || action == "look.around" || action == "use.sticks" || action == "use.stick" || action == "pickup.sticks" || action == "go.west" || action == "go.east" || action == "craft.torches" || action == "craft.torch") {
+    		if (action == "craft.torch") {
+    			action = "craft.torches" ; }
+    		if (action == "help") openHelp();
+    		if (action == "inventory") inven();
+    		if (action == "look.around") {
+    			areaState(3, state, item3); }
+    		if ((action == "use.stick" || action == "use.sticks") && itemNum[4] > 0) {
+    			state = 3;
+    			cout << ">> You proudly wave a stick in the air, answering the riddle.  You\nknew having a terrible sense of humor would come in handy one day!\n>> The door opens.\n" ; }
+    		if ((action == "use.stick" || action == "use.sticks") && itemNum[4] == 0) {
+    			noComprendo() ; }
+    		if (action == "pickup.sticks" && item3 == 1) {
+    			noComprendo() ; }
+    		if (action == "pickup.sticks" && item3 == 0) {
+    			item3 = 1;
+    			itemNum[4] += 4;
+    			cout << ">> Got 4 Sticks!  Aw yeah!\n"; }
+    			if (action == "go.west") {
+    				area = 0;
+    				cout << ">> You head back west into the courtyard.\n" ; }
+    			if (action == "go.east" && state >= 3) {
+    				area = 4;
+    				cout << ">> You head into the bronze building.\n" ; }
+    			if (action == "go.east" && state < 3) {
+    				cout << ">> It's locked until you answer the riddle.\n" ; }
+    			actionCraft() ;
+    	} // Closes big if statement
+    	else noComprendo();
+    } // AREA THREE COMPLETE
+    
+    if (area == 4) {
+    	areaState(4, state, 0); }
+    while (area == 4) {
+    	cin >> action;
+    	if (action == "help" || action == "inventory" || action == "look.around" || action == "pickup.sword" || action == "go.west" || action == "craft.torches" || action == "craft.torch") {
+    		if (action == "craft.torch" ) {
+    			action = "craft.torches" ; }
+    		if (action == "help") openHelp();
+    		if (action == "inventory") inven();
+    		if (action == "look.around") {
+    			areaState(4, state, 0); }
+    		actionCraft();
+    		if (action == "pickup.sword" && itemNum[3] == 1) {
+    			noComprendo() ; }
+    		if (action == "pickup.sword" && itemNum[3] == 0) {
+    			itemNum[3] = 1;
+    			cout << ">> Got Sword!  You go to raise it high above your head\ntriumphantly, but while attempting to do so you smack your hand on\nthe wall.  Stupid small outhouse sword shrine, you gripe, as you\nrub your bruised hand.\n" ; }
+    		if (action == "go.west") {
+    			area = 3;
+    			cout << ">> You exit the shrine, making sure to change the 'Occupied' sign\nto 'Vacant'.\n" ; }
+    	} // Closes big if statement
+    		else noComprendo() ;
+    } // AREA FOUR COMPLETE
+    
+    if (area == 5) {
+    	areaState(5, state, 0) ; }
+    while (area == 5) {
+    	cin >> action;
+    	if (action == "help" || action == "inventory" || action == "look.around" || action == "use.sword" || action == "go.north" || action == "go.south" || action == "craft.torches" || action == "craft.torch") {
+    		if (action == "craft.torch") {
+    			action = "craft.torches" ; }
+    		if (action == "help") openHelp();
+    		if (action == "inventory") inven();
+    		if (action == "look.around") {
+    			areaState(5, state, 0); }
+    		actionCraft();
+    		if (action == "use.sword" && (state > 3 || itemNum[3] == 0)) {
+    			noComprendo() ; }
+    		if (action == "use.sword" && state <4 && itemNum[3] == 1) {
+    			cout << ">> You raise the sword high into the air.  Oh yeah, totally nailed\nit that time.  You then promptly sneeze.  Stupid old dusty magic\nsword.  The drawbridge lowers.\n" ;
+    			state = 4; }
+    		if (action == "go.north" && state > 3) {
+    			area = 6;
+    			cout << ">> You cross the bridge and head inside.\n" ; }
+    		if (action == "go.north" && state < 4) {
+    			cout << ">> You should probably lower the drawbridge first.\n" ; }
+    		if (action == "go.south") {
+    			area = 0;
+    			cout << ">> You head back south into the courtyard.\n" ; }
+    	} // Closes big if statement
+    	else noComprendo() ;
+    } // AREA FIVE COMPLETE
+    
+    if (area == 6) {
+    	areaState(6, state, 0) ; }
+    while (area == 6) {
+    	cin >> action;
+    	if (action == "help" || action == "inventory" || action == "look.around" || action == "use.torches" || action == "go.north" || action == "craft.torches" || action == "craft.torch" || action == "go.south") {
+    		if (action == "craft.torch" ) {
+    			action = "craft.torches" ; }
+    		if (action == "help") openHelp();
+    		if (action == "inventory") inven();
+    		if (action == "look.around") {
+    			areaState(6, state, 0); }
+    		actionCraft();
+    		if (action == "use.torches" && itemNum[5] < 3) {
+    			cout << ">> You're gonna need more torches than that.\n" ; }
+    		if (action == "use.torches" && state < 5 && itemNum[5] == 3) {
+    			itemNum[5] -= 3;
+    			state = 5;
+    			cout << ">> You head north and begin to line the wall with torches.  One...\ntwo... three....  Huh.  You're already at the end.  That hallway\nwas a lot shorter than you thought.\n>> You peek through the iron window-bars of the door leading to\nthe dragon's chamber.  Perfect, the dragon is asleep!\n" ; }
+    		if (action == "go.south") {
+    			area = 5;
+    			cout << ">> You head back outside.\n" ; }
+    		if (action == "go.north" && state < 5) {
+    			cout << ">> Long dark hallways really aren't your thing.  Let's craft up\nsomething to light the way.\n" ; }
+    		if (action == "go.north" && state >= 5) {
+    			area = 7;
+    			cout << ">> Oh geez, I hope you're ready for this.  You head into the\ndragon's lair.\n" ; }
+    	} // Closes big if statement
+    	else noComprendo() ;
+    } // AREA SIX COMPLETE
+} // Closes while (area < 7) loop
 // Area Seven - The Dragon's Lair - Visit One
 if (area == 7) {
 	cout << ">> You inch open the door and sneak in.  You creep up right behind\nthe dragon's head, where it's most vulnerable.  You know what to\ndo, hero!\n"; }
@@ -488,6 +489,7 @@ if (action == "y" || action == "n") {
 } // Closes big if statement
 else noComprendo();
 } // Closes retry question
+    	} // Closes Story One
 	
 // STORY TWO STARTS HERE
 if (story == 1) {
@@ -631,7 +633,5 @@ else noComprendo();
 	} // Closes area == 10 retry loop
 } // Closes while area == 10 loop 553
 } // Closes playthrough loop itemNum[0] != 4
-	} // CLOSES RETRY LOOP OF ENTIRE GAME
-	
-	return 0;
-} // CLOSES MAIN FUNCTION 135
+} // CLOSES RETRY LOOP OF ENTIRE GAME
+} // Closes main function
